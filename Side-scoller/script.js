@@ -41,7 +41,7 @@ window.addEventListener('load', function(){
         this.gameHeight = gameHeight;
         this.width = 200;
         this.height = 200;
-        this.x = 10;
+        this.x = 0;
         this.y = this.gameHeight -this.height;
         this.image = document.getElementById('playerImage');
         this.frameX =0;
@@ -65,6 +65,8 @@ window.addEventListener('load', function(){
         else{
           this.speed =0;
         }
+        if (this.x < 0) this.x = 0;
+        else if(this.x > this.gameWidth - this.width) this.x = this.gameWidth - this.width 
        }
    }
 
@@ -94,7 +96,7 @@ window.addEventListener('load', function(){
       //update and drawing game
       ctx.clearRect(0,0,canvas.width, canvas.height);
       player.draw(ctx);
-      player.update();
+      player.update(input);
       requestAnimationFrame(animate);
    }
    animate();
