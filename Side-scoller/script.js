@@ -60,7 +60,7 @@ window.addEventListener('load', function(){
         //context.fillRect(this.x,this.y,this.width, this.height);
         context.drawImage(this.image, this.frameX*this.width ,this.framey*this.height, this.width, this.height, this.x, this.y, this.width, this.height);
        }
-       update(input){
+       update(input, deltaTime){
         //sprite animation
         if(this.frameTimer > this.frameInterval){
              if(this.frameX >= this.maxframe) this.frameX =0;
@@ -89,6 +89,7 @@ window.addEventListener('load', function(){
         this.y += this.vy;
         if(!this.onGround()){
           this.vy += this.weight;
+          this.maxframe =5;
           this.framey = 1;
         }else{
           this.vy =0;
