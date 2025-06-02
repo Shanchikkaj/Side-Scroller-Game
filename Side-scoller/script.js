@@ -57,8 +57,8 @@ window.addEventListener('load', function(){
         this.weight =1;
        }
        draw(context){
-        //context.fillStyle = 'white';
-        //context.fillRect(this.x,this.y,this.width, this.height);
+        context.strokeStyle = 'white';
+        context.strokeRect(this.x,this.y,this.width, this.height);
         context.drawImage(this.image, this.frameX*this.width ,this.framey*this.height, this.width, this.height, this.x, this.y, this.width, this.height);
        }
        update(input, deltaTime){
@@ -144,6 +144,8 @@ window.addEventListener('load', function(){
 
     }
     draw(context){
+      context.strokeStyle = 'white';
+      context.strokeRect(this.x, this.y, this.width, this.height);
       context.drawImage(this.image,  this.frameX*this.width,0,this.width,this.height,this.x,this.y, this.width, this.height);
     }
     update(deltaTime){
@@ -156,7 +158,10 @@ window.addEventListener('load', function(){
       }
     
       this.x-= this.speed;
-      if(this.x < 0 -this.width)this.markedForDeletion = true;
+      if(this.x < 0 -this.width){
+        this.markedForDeletion = true;
+        score++;
+      }
     }
 
    }
@@ -178,8 +183,13 @@ window.addEventListener('load', function(){
      enemies = enemies.filter(enemy => !enemy.markedForDeletion);
    }
 
-   function displayStatusText(){
+   function displayStatusText(context){
      //display score
+     context.font = '40px helvetica';
+     context.fillStyle = 'black';
+     context.fillText('Score: '+ score,20,50);
+      context.fillStyle = 'White';
+     context.fillText('Score: '+ score,22,52);
 
    }
 
@@ -200,7 +210,8 @@ window.addEventListener('load', function(){
        background.update();
       player.draw(ctx);
       player.update(input, deltaTime);
-      handleEnemies(deltaTime)
+      handleEnemies(deltaTime);
+      displayStatusText(ctx);
       requestAnimationFrame(animate);
    }
    animate(0);
