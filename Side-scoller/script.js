@@ -4,6 +4,7 @@ window.addEventListener('load', function(){
     canvas.width = 800;
     canvas.height = 720;
     let enemies = [];
+    let score = 0;
 
 
    class InputHandler{
@@ -139,6 +140,7 @@ window.addEventListener('load', function(){
       this.frameTimer =0;
       this.frameInterval = 1000/this.fps;
       this.speed = 8;
+      this.markedForDeletion = false;
 
     }
     draw(context){
@@ -154,6 +156,7 @@ window.addEventListener('load', function(){
       }
     
       this.x-= this.speed;
+      if(this.x < 0 -this.width)this.markedForDeletion = true;
     }
 
    }
@@ -162,6 +165,7 @@ window.addEventListener('load', function(){
      // add and remove enemies
       if(enemyTimer > enemyInterval + randomEnemyInterval){
          enemies.push(new enemy(canvas.width, canvas.height));
+         console.log(enemies);
          randomEnemyInterval = Math.random()*1000 + 500;
          enemyTimer = 0;
       } else{
@@ -170,7 +174,8 @@ window.addEventListener('load', function(){
      enemies.forEach(enemy =>{
       enemy.draw(ctx);
       enemy.update(deltaTime);
-     })
+     });
+     enemies = enemies.filter(enemy => !enemy.markedForDeletion);
    }
 
    function displayStatusText(){
